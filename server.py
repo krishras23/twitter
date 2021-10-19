@@ -1,6 +1,6 @@
 import flask
 from flask_cors import CORS
-from flask import request, jsonify
+from flask import request, Response
 from dbhelper import make_user, delete_user
 from hash import Hashed
 
@@ -13,13 +13,14 @@ app.config["DEBUG"] = True
 def creating_user():
     data = request.get_json()
     username = data["username"]
+
+    if "password" not in data:
+        return Response("{'password':'not found'}", status=501, mimetype='application/json')
     password = data["password"]
     HashedPassword = Hashed(password)
     email = data["email"]
     make_user(username, HashedPassword, email)
-    resp = jsonify(success=True)
-    # find a better way to show status codes
-    return resp
+    return ""
 
 
 @app.route('/delete_user', methods=["DELETE"])
