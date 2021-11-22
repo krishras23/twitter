@@ -1,19 +1,20 @@
 create DATABASE twitter
 
-create TABLE twitter.user (
-	username VARCHAR(20) PRIMARY KEY,
+create TABLE twitter.users (
+    userID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	username VARCHAR(20) UNIQUE,
 	userPassword VARCHAR(20),
 	email VARCHAR(200),
 	createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-select * from twitter.user
+select * from twitter.users
 
 
-INSERT INTO twitter.user (username, userPassword, email) values ();
+INSERT INTO twitter.users (username, userPassword, email) values ();
 
-UPDATE twitter.user
+UPDATE twitter.users
 
-ALTER TABLE twitter.user MODIFY COLUMN username VARCHAR(200);
-ALTER TABLE twitter.user MODIFY COLUMN userPassword VARCHAR(200);
+ALTER TABLE twitter.users MODIFY COLUMN username VARCHAR(200);
+ALTER TABLE twitter.users MODIFY COLUMN userPassword VARCHAR(200);
 

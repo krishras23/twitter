@@ -1,7 +1,7 @@
 import requests
 
 
-def checkStatus(payload):
+def check_status(payload):
     x = requests.post(url="http://127.0.0.1:5000/create_user", json=payload)
     if x.status_code == 200:
         print('Success!')
@@ -10,12 +10,9 @@ def checkStatus(payload):
 
 
 # no username key
-checkStatus({"": "hulk", "password": "password", "email": "jsonify.com"})
-
+check_status({"": "hulk", "password": "password", "email": "jsonify.com"})
 # no password key
-checkStatus({"username": "iamgroot", "": "password", "email": "jsonify.com"})
+check_status({"username": "iamgroot", "": "password", "email": "jsonify.com"})
 # no email key
-checkStatus({"username": "sneaky32", "password": "password", "": "jsonify.com"})
-
-checkStatus({"username": "ninja56", "password": "password", "email": "jsonify.com"})
-
+check_status({"username": "sneaky32", "password": "password", "": "jsonify.com"})
+check_status({"username": "ninja56", "password": "password", "email": "jsonify.com"})
