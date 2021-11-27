@@ -3,35 +3,29 @@ import "./App.css";
 import axios from 'axios';
 
 
+
+
 function App() {
   const CreateUserRef = useRef()
 
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
-  const [UserList, setUserList] = useState([])
 
  
+  let headers =  {mode: 'no-cors'}
  
   const CreateUser = () => {
+    console.log("got ---", name, password, email)
     axios.post("http://localhost:5000/create_user", {
       username: name,
-      userPassword: password,
+      password: password,
       email: email,
-    }).then(() => {
-      setUserList([
-        ...UserList,
-        {
-          username: name,
-          userPassword: password,
-          email: email
-        },
-      ]);
+    }, headers).then((response) => {
+      console.log("got response ---" + response.data)
+      alert(response.data)
     });
   };
-  
- 
-
 
   return (
     <div className="App">
@@ -50,8 +44,9 @@ function App() {
           onChange={(event) => {setEmail(event.target.value) }} />
        
         <button onClick={CreateUser}> Create Account </button>
+
       </div>
-     </div>
+    </div>  
 
   );
 }
