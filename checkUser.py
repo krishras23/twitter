@@ -6,7 +6,7 @@ def check_username(username):
     if len(username) < 5 or len(username) > 30:
         return False
     else:
-        return username
+        return True
 
 
 def check_password(password):

@@ -1,5 +1,7 @@
 from mysql.connector import connect, Error
 
+from hash import hashed
+
 
 def write_to_db(twitter_query):
     try:
@@ -30,39 +32,45 @@ def delete_user(username, password):
     print(delete_user_query)
 
 
-def get_user_info():
+def make_tweet(username,tweet):
+    tweet_query = "INSERT into twitter.tweets (username, tweet) values (\"{}\", \"{}\");".format(username, tweet)
+    write_to_db(tweet_query)
+    print(tweet_query)
+
+
+def see_tweets():
     try:
         with connect(
                 host="localhost",
                 user='root',
                 password='tomato',
         ) as connection:
-            userList = []
-            get_user_info_query = "select username from twitter.users"
+            tweets = []
+            login_query = "select * from twitter.tweets"
             with connection.cursor() as cursor:
-                cursor.execute(get_user_info_query)
+                cursor.execute(login_query)
                 for record in cursor:
-                    userList.append(record)
-                return userList
+                    tweets.append(record)
+                return tweets
     except Error as e:
         print(e)
 
 
-def check_user_info():
+def login(username, password):
     try:
         with connect(
                 host="localhost",
                 user='root',
                 password='tomato',
         ) as connection:
-            username_password = []
-            getUsernamePassword_query = "select username, UserPassword from twitter.users"
+            login_combination = []
+            new_password = hashed(password)
+            login_query = "select username, UserPassword from twitter.users where username = \"{}\" and " \
+                          "userPassword = \"{}\"".format(username, new_password)
             with connection.cursor() as cursor:
-                cursor.execute(getUsernamePassword_query)
+                cursor.execute(login_query)
                 for record in cursor:
-                    username_password.append(record)
-                return username_password
+                    login_combination.append(record)
+                return login_combination
     except Error as e:
         print(e)
-
-

@@ -18,3 +18,8 @@ UPDATE twitter.users
 ALTER TABLE twitter.users MODIFY COLUMN username VARCHAR(200);
 ALTER TABLE twitter.users MODIFY COLUMN userPassword VARCHAR(200);
 
+create TABLE twitter.tweets (
+    tweetID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	username VARCHAR(20),
+	createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
