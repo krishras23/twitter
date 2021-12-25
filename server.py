@@ -2,7 +2,7 @@ import json
 import flask
 from flask_cors import CORS
 from flask import request, Response, jsonify
-from dbhelper import make_user, delete_user, login, make_tweet, see_tweets
+from dbhelper import make_user, delete_user, login, make_tweet, see_tweets, grabUserID
 from hash import hashed
 from checkUser import check_username, check_password, check_email
 
@@ -32,9 +32,11 @@ def logging_in():
     username = data["username"]
     password = data["password"]
     if len(login(username, password)) > 0:
+        # this means success so grab the user id from database
+        ID_List = grabUserID(username, password)
         return Response("Success", status=200, mimetype='application/json')
     else:
-        return Response("Username/Password Not Found")
+        return Response("Username or Password was not found")
 
 
 @app.route('/delete_user', methods=["DELETE"])

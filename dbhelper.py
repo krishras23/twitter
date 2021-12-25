@@ -18,11 +18,34 @@ def write_to_db(twitter_query):
         print(e)
 
 
+def grabUserID(username, password):
+    try:
+        with connect(
+                host="localhost",
+                user='root',
+                password='tomato',
+        ) as connection:
+            ID_list = []
+            login_query = "select userID from twitter.users where username = \"{}\" and " \
+                          "userPassword = \"{}\"".format(username, password)
+            with connection.cursor() as cursor:
+                cursor.execute(login_query)
+                for record in cursor:
+                    ID_list.append(record)
+                return ID_list
+    except Error as e:
+        print(e)
+
+
 def make_user(username, password, email):
     make_user_query = "INSERT INTO twitter.users (username, userPassword, email) values" \
                       " (\"{}\", \"{}\", \"{}\");".format(username, password, email)
     write_to_db(make_user_query)
-    print(make_user_query)
+    ID = grabUserID(username, password)
+    print(ID)
+
+
+make_user("joeyyy", "john", "yo")
 
 
 def delete_user(username, password):
@@ -32,7 +55,7 @@ def delete_user(username, password):
     print(delete_user_query)
 
 
-def make_tweet(username,tweet):
+def make_tweet(username, tweet):
     tweet_query = "INSERT into twitter.tweets (username, tweet) values (\"{}\", \"{}\");".format(username, tweet)
     write_to_db(tweet_query)
     print(tweet_query)
