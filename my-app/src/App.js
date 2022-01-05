@@ -4,18 +4,32 @@ import axios from 'axios';
 
 
 
+
 function App() {
   const CreateUserRef = useRef()
+  const CreateTweetRef = useRef()
 
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
+  const [tweet, setTweet] = useState("")
 
   let headers = { mode: 'no-cors' }
 
   const GetTweets = () => {
     axios.get("http://localhost:5000/see_tweets").then((response) => {
       console.log("got response ---" + response.data)
+    });
+  };
+
+  const MakeTweet = () => {
+    console.log("got ---", name, tweet)
+    axios.post("http://localhost:5000/tweet", {
+      username: name,
+      tweet: tweet,
+    }, headers).then((response) => {
+      console.log("got response ---" + response.data)
+      alert(response.data)
     });
   };
 
@@ -66,6 +80,15 @@ function App() {
           <input ref={CreateUserRef} type="password" placeholder="Password"
             onChange={(event) => { setPassword(event.target.value) }} />
           <button onClick={Login}> Login </button>
+        </div>
+
+
+        <div className="login">
+          <h2> Tweets</h2>
+          <button onClick={GetTweets}> See Tweets </button>
+          <input ref={CreateTweetRef} type="text" 
+            onChange={(event) => { setTweet(event.target.value) }} />
+          <button onClick={MakeTweet}> Make Tweets </button>
         </div>
 
 

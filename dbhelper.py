@@ -69,7 +69,7 @@ def see_tweets():
                 password='tomato',
         ) as connection:
             tweets = []
-            login_query = "select * from twitter.tweets"
+            login_query = "select username, tweet from twitter.tweets"
             with connection.cursor() as cursor:
                 cursor.execute(login_query)
                 for record in cursor:

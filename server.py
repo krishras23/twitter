@@ -62,7 +62,7 @@ def tweeting():
     tweet = data["tweet"]
     username = data["username"]
     make_tweet(username, tweet)
-    return ""
+    return username
 
 
 @app.route('/see_tweets', methods=["GET"])
