@@ -13,6 +13,7 @@ function App() {
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   const [tweet, setTweet] = useState("")
+  const [username, setUsername] = useState("")
 
   let headers = { mode: 'no-cors' }
 
@@ -23,9 +24,9 @@ function App() {
   };
 
   const MakeTweet = () => {
-    console.log("got ---", name, tweet)
+    console.log("got ---", username, tweet)
     axios.post("http://localhost:5000/tweet", {
-      username: name,
+      username: username,
       tweet: tweet,
     }, headers).then((response) => {
       console.log("got response ---" + response.data)
@@ -85,10 +86,15 @@ function App() {
 
         <div className="login">
           <h2> Tweets</h2>
-          <button onClick={GetTweets}> See Tweets </button>
-          <input ref={CreateTweetRef} type="text" 
-            onChange={(event) => { setTweet(event.target.value) }} />
-          <button onClick={MakeTweet}> Make Tweets </button>
+          {/* <button onClick={GetTweets}> See Tweets </button> */}
+          <label> Message </label> 
+          <input ref={CreateTweetRef} type="text" name = "Message"
+            onChange={(event) => {setTweet(event.target.value)}} />
+          <label> Username </label> 
+          <input ref={CreateTweetRef} type="text" name = "Message"
+            onChange={(event) => {setUsername(event.target.value)}} />
+          <button onClick={MakeTweet}> Post Tweet </button>
+          
         </div>
 
 

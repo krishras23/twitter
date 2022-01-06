@@ -23,3 +23,9 @@ create TABLE twitter.tweets (
 	username VARCHAR(20),
 	createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+create TABLE twitter.followers (
+    follower VARCHAR(20),
+	following VARCHAR(20),
+);
