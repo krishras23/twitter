@@ -17,11 +17,12 @@ function App() {
 
   let headers = { mode: 'no-cors' }
 
-  const GetTweets = () => {
+  const GetFollowingTweets = () => {
     axios.get("http://localhost:5000/see_tweets").then((response) => {
       console.log("got response ---" + response.data)
     });
   };
+
 
   const MakeTweet = () => {
     console.log("got ---", username, tweet)
@@ -96,6 +97,14 @@ function App() {
           <button onClick={MakeTweet}> Post Tweet </button>
           
         </div>
+
+
+        <div className="follow">
+          <h2> Follow Other Users </h2>
+          <button onClick={GetFollowingTweets}> Follow </button>
+        </div>
+
+
 
 
       </div>

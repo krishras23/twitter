@@ -10,5 +10,4 @@ Problems to Fix
 
 #
 * Create follow users functionality
-* Create tweet functionality
 * Create dashboard for home

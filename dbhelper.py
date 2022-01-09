@@ -37,15 +37,18 @@ def grabUserID(username, password):
         print(e)
 
 
+def follow(follower, following):
+    follow_query = "INSERT into twitter.followers (follower, following) values" \
+                      " (\"{}\", \"{}\");".format(follower, following)
+    write_to_db(follow_query)
+
+
 def make_user(username, password, email):
     make_user_query = "INSERT INTO twitter.users (username, userPassword, email) values" \
                       " (\"{}\", \"{}\", \"{}\");".format(username, password, email)
     write_to_db(make_user_query)
     ID = grabUserID(username, password)
     print(ID)
-
-
-make_user("joeyyy", "john", "yo")
 
 
 def delete_user(username, password):
@@ -56,7 +59,7 @@ def delete_user(username, password):
 
 
 def make_tweet(username, tweet):
-    tweet_query = "INSERT into twitter.tweets (username, tweet) values (\"{}\", \"{}\");".format(username, tweet)
+    tweet_query = "INSERT into twitter.tweet (username, message) values (\"{}\", \"{}\");".format(username, tweet)
     write_to_db(tweet_query)
     print(tweet_query)
 
@@ -69,9 +72,9 @@ def see_tweets():
                 password='tomato',
         ) as connection:
             tweets = []
-            login_query = "select username, tweet from twitter.tweets"
+            get_tweets_query = "select username, tweet from twitter.tweet"
             with connection.cursor() as cursor:
-                cursor.execute(login_query)
+                cursor.execute(get_tweets_query)
                 for record in cursor:
                     tweets.append(record)
                 return tweets
@@ -97,3 +100,6 @@ def login(username, password):
                 return login_combination
     except Error as e:
         print(e)
+
+
+follow("krish", "some oen")

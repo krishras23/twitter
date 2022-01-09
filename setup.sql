@@ -18,9 +18,10 @@ UPDATE twitter.users
 ALTER TABLE twitter.users MODIFY COLUMN username VARCHAR(200);
 ALTER TABLE twitter.users MODIFY COLUMN userPassword VARCHAR(200);
 
-create TABLE twitter.tweets (
+create TABLE twitter.tweet (
     tweetID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	username VARCHAR(20),
+	username VARCHAR(20) NOT NULL,
+	message VARCHAR (100),
 	createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -29,3 +30,18 @@ create TABLE twitter.followers (
     follower VARCHAR(20),
 	following VARCHAR(20),
 );
+
+SELECT *
+FROM tweets
+INNER JOIN followers
+ON tweets.username = followers.following;
+
+SELECT *
+FROM tweets
+RIGHT JOIN followers
+ON tweets.username = followers.following;
+
+SELECT *
+FROM tweets
+LEFT JOIN followers
+ON tweets.username = followers.following;
