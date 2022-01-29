@@ -31,10 +31,17 @@ def logging_in():
     data = request.get_json()
     username = data["username"]
     password = data["password"]
-    if len(login(username, password)) > 0:
+    userInfo = login(username, password)
+    if len(userInfo) > 0:
         # this means success so grab the user id from database
-        ID_List = grabUserID(username, password)
-        return Response("Success", status=200, mimetype='application/json')
+        print('got username as ' + userInfo[0])
+        print('set cookie for user')
+        res = flask.make_response()
+        res.delete_cookie('username')
+        res.set_cookie('username2', userInfo[0])
+        res.status = 200
+        res.mimetype = 'application/json'
+        return res
     else:
         return Response("Username or Password was not found")
 
@@ -49,17 +56,20 @@ def deleting_user():
     return ""
 
 
-@app.route('/set_cookie', methods=["GET"])
-def set_cookie():
-    res = flask.make_response("Cookie is set")
-    res.set_cookie("username", value="Valid cookie")
-    return res
-
+# @app.route('/set_cookie', methods=["GET"])
+# def set_cookie():
+#     res = flask.make_response("Cookie is set")
+#     res.set_cookie("username", value="Valid cookie")
+#     return res
+#
 
 @app.route('/tweet', methods=["POST"])
 def tweeting():
     data = request.get_json()
     tweet = data["tweet"]
+    print(request)
+    # cookieUserName = request.cookies.get('username2')
+    # print("did we get any cookie -- " + cookieUserName)
     username = data["username"]
     make_tweet(username, tweet)
     return username

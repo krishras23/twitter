@@ -38,7 +38,7 @@ def grabUserID(username, password):
 
 
 def follow(follower, following):
-    follow_query = "INSERT into twitter.followers (follower, following) values" \
+    follow_query = "INSERT into twitter.follow (follower, following) values" \
                       " (\"{}\", \"{}\");".format(follower, following)
     write_to_db(follow_query)
 
@@ -59,7 +59,7 @@ def delete_user(username, password):
 
 
 def make_tweet(username, tweet):
-    tweet_query = "INSERT into twitter.tweet (username, message) values (\"{}\", \"{}\");".format(username, tweet)
+    tweet_query = "INSERT into twitter.tweet (username, tweet) values (\"{}\", \"{}\");".format(username, tweet)
     write_to_db(tweet_query)
     print(tweet_query)
 
@@ -90,16 +90,18 @@ def login(username, password):
                 password='tomato',
         ) as connection:
             login_combination = []
-            new_password = hashed(password)
-            login_query = "select username, UserPassword from twitter.users where username = \"{}\" and " \
-                          "userPassword = \"{}\"".format(username, new_password)
+            hashed_password = hashed(password)
+            login_query = "select username from twitter.users where username = \"{}\" and " \
+                          "userPassword = \"{}\"".format(username, hashed_password)
             with connection.cursor() as cursor:
                 cursor.execute(login_query)
                 for record in cursor:
-                    login_combination.append(record)
+                    login_combination.append(record[0])
                 return login_combination
     except Error as e:
         print(e)
 
 
-follow("krish", "some oen")
+follow("krish", "chess")
+follow("krish", "Lebron James")
+follow("jack", "hello")

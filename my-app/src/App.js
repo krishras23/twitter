@@ -5,6 +5,7 @@ import axios from 'axios';
 
 
 
+
 function App() {
   const CreateUserRef = useRef()
   const CreateTweetRef = useRef()
@@ -53,12 +54,14 @@ function App() {
       username: name,
       password: password,
     }).then((response) => {
-      console.log("got response ---" + response.data)
+      console.log("login recieved user name ---" + response.data)
+      console.log("cookie", response.cookie)
       alert(response.data)
     });
   };
 
 
+  
   return (
     <div className="App">
       <h1> <center>Welcome to Twitter</center> </h1>
